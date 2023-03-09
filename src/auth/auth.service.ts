@@ -28,19 +28,20 @@ export class AuthService {
     if (checkIfUserExist) {
       throw new ForbiddenException('User with these credentials already exist');
     }
+
     try {
-      const user = await this.prisma.user.create({
+      const newUser = await this.prisma.user.create({
         data: {
           email: dto.email,
           name: dto.name,
-          phoneNumber: dto.phoneNumber,
+          phone_number: dto.phoneNumber,
           password: hash,
         },
       });
       return {
-        data: user,
-        message: 'Account created successfully',
+        data: newUser,
         success: true,
+        message: 'user created successfully',
       };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
