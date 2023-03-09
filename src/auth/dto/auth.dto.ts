@@ -23,24 +23,6 @@ export class CreateUserDto {
   )
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(8)
-  @MaxLength(20)
-  @Matches(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-    {
-      message:
-        'password must contain Min of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character',
-    },
-  )
-  @ApiProperty({
-    description: 'user password',
-    type: String,
-    required: true,
-  })
-  password: string;
-
   @ApiProperty({
     description: 'user first name',
     type: String,
@@ -58,4 +40,22 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   phoneNumber: string;
+
+  @ApiProperty({
+    description: 'user password',
+    type: String,
+    required: true,
+  })
+  @IsString()
+  @IsNotEmpty()
+  @MinLength(8)
+  @MaxLength(20)
+  @Matches(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+    {
+      message:
+        'password must contain Min of eight characters, at least one uppercase letter, one lowercase letter, one number and one special character',
+    },
+  )
+  password: string;
 }
