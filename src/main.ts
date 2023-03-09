@@ -10,6 +10,7 @@ async function bootstrap() {
       disableErrorMessages: true,
       whitelist: true,
       forbidNonWhitelisted: true,
+      transform: true,
     }),
   );
   const config: any = new DocumentBuilder()
