@@ -32,8 +32,9 @@ export class AuthService {
     try {
       const paymentID = function generateId() {
         const length = 7;
-        const paymentID = uuid();
-        const chars = paymentID;
+        const string_value = uuid();
+        const cleaned_string = string_value.replace(/[^a-zA-Z0-9\n\.]/g, '');
+        const chars = cleaned_string;
         let result = '';
         for (let i = 0; i < length; i++) {
           result += chars[Math.floor(Math.random() * chars.length)];
@@ -78,6 +79,44 @@ export class AuthService {
       throw new ForbiddenException('User does not exist');
     }
 
-    console.log(user);
+    if (user.paymentID.length === 5) {
+      throw new ForbiddenException('Max number of payment IDs reached');
+    }
+
+    const paymentID = function generateId() {
+      const length = 7;
+      const string_value = uuid();
+      const cleaned_string = string_value.replace(/[^a-zA-Z0-9\n\.]/g, '');
+      const chars = cleaned_string;
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        result += chars[Math.floor(Math.random() * chars.length)];
+      }
+      return result;
+    };
+
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          paymentID: [...user.paymentID, paymentID()],
+        },
+      });
+      return {
+        data: updatedUser,
+        success: true,
+        message: 'payment ID generates successfully',
+      };
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new ForbiddenException(
+          'User with these credentials already exist',
+        );
+      } else if (error instanceof PrismaClientValidationError) {
+        throw new ForbiddenException('Invalid credentials');
+      } else {
+        throw error;
+      }
+    }
   }
 }
