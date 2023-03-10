@@ -7,6 +7,7 @@ import {
 } from '@prisma/client/runtime';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { v4 as uuid } from 'uuid';
 import { CreateUserDto } from './dto/auth.dto';
 
 @Injectable()
@@ -28,16 +29,27 @@ export class AuthService {
     if (checkIfUserExist) {
       throw new ForbiddenException('User with these credentials already exist');
     }
-
     try {
+      const paymentID = function generateId() {
+        const length = 7;
+        const paymentID = uuid();
+        const chars = paymentID;
+        let result = '';
+        for (let i = 0; i < length; i++) {
+          result += chars[Math.floor(Math.random() * chars.length)];
+        }
+        return result;
+      };
       const newUser = await this.prisma.user.create({
         data: {
           email: dto.email,
           name: dto.name,
           phone_number: dto.phoneNumber,
           password: hash,
+          paymentID: [paymentID()],
         },
       });
+
       return {
         data: newUser,
         success: true,
@@ -54,5 +66,18 @@ export class AuthService {
         throw error;
       }
     }
+  }
+
+  async generatePaymentId(userId: string) {
+    await this.prisma.$connect();
+    const user = await this.prisma.user.findFirst({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('User does not exist');
+    }
+
+    console.log(user);
   }
 }

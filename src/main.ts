@@ -20,7 +20,7 @@ async function bootstrap() {
       'This is the official User management API document for skywallet assessment',
     )
     .setVersion('1.0.0')
-    .addServer('')
+    .addServer('http://localhost:3000/v1/api')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
