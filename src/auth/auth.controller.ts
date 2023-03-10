@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -48,10 +49,10 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'generate payment id' })
+  @ApiOperation({ summary: 'delete user with payment id' })
   @ApiOkResponse({
     status: HttpStatus.OK,
-    description: 'Payment ID generated successfully.',
+    description: 'Payment ID deleted successfully.',
   })
   @Delete('/deletePaymentId/:id/paymentId/:paymentId')
   async deletePaymentId(
@@ -59,5 +60,16 @@ export class AuthController {
     @Param('paymentId') paymentId: string,
   ) {
     return this.authService.deletePaymentId(id, paymentId);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'get user by payment id' })
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    description: 'User info retrieved successfully.',
+  })
+  @Get('/getUserByPaymentId/:paymentId')
+  async getUserByPaymentId(@Param('paymentId') paymentId: string) {
+    return this.authService.getUserByPaymentId(paymentId);
   }
 }

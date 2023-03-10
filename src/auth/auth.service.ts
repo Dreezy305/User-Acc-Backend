@@ -149,4 +149,29 @@ export class AuthService {
       };
     } catch (error) {}
   }
+
+  async getUserByPaymentId(paymentId: string) {
+    await this.prisma.$connect();
+    try {
+      const user = await this.prisma.user.findFirst({
+        where: {
+          paymentID: {
+            has: paymentId,
+          },
+        },
+      });
+
+      if (!user) {
+        throw new ForbiddenException('User not found');
+      }
+
+      return {
+        data: user,
+        success: true,
+        message: 'user data successfully retrieved',
+      };
+    } catch (error) {
+      throw new ForbiddenException('User not found');
+    }
+  }
 }
