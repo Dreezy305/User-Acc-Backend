@@ -126,10 +126,27 @@ export class AuthService {
     const user = await this.prisma.user.findFirst({
       where: { id: userId },
     });
-
     if (!user) {
       throw new ForbiddenException('User does not exist');
     }
-    console.log(user);
+    const index = user.paymentID.indexOf(paymentId);
+    if (index === -1) {
+      throw new ForbiddenException(
+        `Payment ${paymentId} not found for user ${userId}`,
+      );
+    }
+    try {
+      const updatedUser = await this.prisma.user.update({
+        where: { id: userId },
+        data: {
+          paymentID: { set: user.paymentID.filter((id) => id !== paymentId) },
+        },
+      });
+      return {
+        data: updatedUser,
+        success: true,
+        message: 'payment ID deleted successfully',
+      };
+    } catch (error) {}
   }
 }

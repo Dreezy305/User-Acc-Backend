@@ -53,7 +53,7 @@ export class AuthController {
     status: HttpStatus.OK,
     description: 'Payment ID generated successfully.',
   })
-  @Delete('/deletePaymentId/:id/:paymentId')
+  @Delete('/deletePaymentId/:id/paymentId/:paymentId')
   async deletePaymentId(
     @Param('id') id: string,
     @Param('paymentId') paymentId: string,
