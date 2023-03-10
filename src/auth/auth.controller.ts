@@ -1,5 +1,19 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  ApiBody,
+  ApiOkResponse,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/auth.dto';
 
@@ -19,5 +33,15 @@ export class AuthController {
   @Post('signup')
   async signUp(@Body() dto: CreateUserDto) {
     return await this.authService.signUp(dto);
+  }
+
+  @ApiOperation({ summary: 'generate payment id' })
+  @ApiOkResponse({
+    status: HttpStatus.FOUND,
+    description: 'Payment ID generated successfully.',
+  })
+  @Put('/generatePaymentId/:id')
+  async generateId(@Param('id') id: string) {
+    return this.authService.generatePaymentId(id);
   }
 }
