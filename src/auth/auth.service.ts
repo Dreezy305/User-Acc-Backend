@@ -69,6 +69,7 @@ export class AuthService {
     }
   }
 
+  // GENERATES D ADDITIONAL PAYMENT ID
   async generatePaymentId(userId: string) {
     await this.prisma.$connect();
     const user = await this.prisma.user.findFirst({
@@ -105,7 +106,7 @@ export class AuthService {
       return {
         data: updatedUser,
         success: true,
-        message: 'payment ID generates successfully',
+        message: 'payment ID generated successfully',
       };
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
@@ -118,5 +119,17 @@ export class AuthService {
         throw error;
       }
     }
+  }
+
+  async deletePaymentId(userId: string, paymentId: string) {
+    await this.prisma.$connect();
+    const user = await this.prisma.user.findFirst({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new ForbiddenException('User does not exist');
+    }
+    console.log(user);
   }
 }
