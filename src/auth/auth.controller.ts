@@ -18,6 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/auth.dto';
+import { TransferDto } from './dto/transfer.dto';
 
 @Controller('auth')
 @ApiTags('User Management Service')
@@ -71,5 +72,16 @@ export class AuthController {
   @Get('/getUserByPaymentId/:paymentId')
   async getUserByPaymentId(@Param('paymentId') paymentId: string) {
     return this.authService.getUserByPaymentId(paymentId);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'transfer funds' })
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    description: 'Funds sent successfully.',
+  })
+  @Post('/transferFunds')
+  async transferFunds(@Body() transferdto: TransferDto) {
+    return this.authService.transferFunds(transferdto);
   }
 }

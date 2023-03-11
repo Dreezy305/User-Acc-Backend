@@ -9,6 +9,7 @@ import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { CreateUserDto } from './dto/auth.dto';
+import { TransferDto } from './dto/transfer.dto';
 
 @Injectable()
 export class AuthService {
@@ -177,5 +178,63 @@ export class AuthService {
     } catch (error) {
       throw new ForbiddenException('User not found');
     }
+  }
+
+  // SEND AND RECIEVE MONEY
+  async transferFunds(transferDto: TransferDto) {
+    const sender = await this.prisma.user.findUnique({
+      where: { email: transferDto.senderEmail },
+    });
+
+    if (!sender) {
+      return { message: 'Sender not found' };
+    }
+
+    const recipient = await this.prisma.user.findUnique({
+      where: { email: transferDto.receiverEmail },
+    });
+
+    if (!recipient) {
+      return { message: 'Recipient not found' };
+    }
+
+    if (sender.accountBalance < transferDto.amount) {
+      return { message: 'Insufficient funds' };
+    }
+
+    try {
+      const transaction = await this.prisma.$transaction(async (tx) => {
+        const sender = await tx.user.update({
+          data: {
+            accountBalance: {
+              decrement: transferDto.amount,
+            },
+          },
+          where: {
+            email: transferDto.senderEmail,
+          },
+        });
+
+        const recipient = await tx.user.update({
+          data: {
+            accountBalance: {
+              increment: transferDto.amount,
+            },
+          },
+          where: {
+            email: transferDto.receiverEmail,
+          },
+        });
+
+        return {
+          data: { sender: sender, recipient: recipient },
+          success: true,
+          message: 'funds sent successfully',
+        };
+      });
+      return transaction;
+    } catch (error) {}
+
+    return '';
   }
 }
