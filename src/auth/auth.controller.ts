@@ -84,4 +84,15 @@ export class AuthController {
   async transferFunds(@Body() transferdto: TransferDto) {
     return this.authService.transferFunds(transferdto);
   }
+
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'get transaction history' })
+  @ApiOkResponse({
+    status: HttpStatus.OK,
+    description: 'user retrieved successfully',
+  })
+  @Get('/getTransactionHistory/:id')
+  getTransactionHistory(@Param('id') id: string) {
+    return this.authService.getTransactionHistory(id);
+  }
 }

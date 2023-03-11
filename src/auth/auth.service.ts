@@ -297,4 +297,28 @@ export class AuthService {
       return reversedTransaction;
     }
   }
+
+  async getTransactionHistory(id: string) {
+    await this.prisma.$connect();
+    try {
+      const user = await this.prisma.user.findUnique({
+        where: { id: id },
+        // select: { id: true, accountBalance: true, currency: true },
+        include: { sentTransactions: true, receivedTransactions: true },
+      });
+      return {
+        data: user,
+        success: true,
+        message: 'user retrieved successfully',
+      };
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        throw new ForbiddenException('User does not exist');
+      } else if (error instanceof PrismaClientValidationError) {
+        throw new ForbiddenException('Invalid credentials');
+      } else {
+        throw error;
+      }
+    }
+  }
 }
