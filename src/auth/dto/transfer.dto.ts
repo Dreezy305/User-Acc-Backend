@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsAlpha, IsEmail, IsInt, IsNotEmpty, Matches } from 'class-validator';
+import {
+  IsAlpha,
+  IsEmail,
+  IsInt,
+  IsNotEmpty,
+  IsString,
+  Matches,
+} from 'class-validator';
 
 export class TransferDto {
   @ApiProperty({
@@ -36,4 +43,13 @@ export class TransferDto {
   @IsInt()
   @IsNotEmpty()
   amount: number;
+
+  // @ApiProperty({
+  //   description: 'currency',
+  //   type: String,
+  //   required: true,
+  // })
+  // @IsString()
+  // @IsNotEmpty()
+  // currency: string;
 }

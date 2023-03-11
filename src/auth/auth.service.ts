@@ -1,6 +1,7 @@
-import { ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable, ParseIntPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { Prisma } from '@prisma/client';
 import {
   PrismaClientKnownRequestError,
   PrismaClientValidationError,
@@ -53,7 +54,6 @@ export class AuthService {
           currency: '₦',
         },
       });
-
       return {
         data: newUser,
         success: true,
@@ -184,7 +184,8 @@ export class AuthService {
   async transferFunds(transferDto: TransferDto) {
     const sender = await this.prisma.user.findUnique({
       where: { email: transferDto.senderEmail },
-      select: { id: true, accountBalance: true },
+      // select: { id: true, accountBalance: true, currency: true },
+      include: { sentTransactions: true },
     });
 
     if (!sender) {
@@ -193,7 +194,8 @@ export class AuthService {
 
     const recipient = await this.prisma.user.findUnique({
       where: { email: transferDto.receiverEmail },
-      select: { id: true, accountBalance: true },
+      // select: { id: true, accountBalance: true, currency: true },
+      include: { receivedTransactions: true },
     });
 
     if (!recipient) {
@@ -204,40 +206,61 @@ export class AuthService {
       return { message: 'Insufficient funds' };
     }
 
+    const newTransaction = await this.prisma.transaction.create({
+      data: {
+        // senderEmail: transferDto.senderEmail,
+        // receiverEmail: transferDto.receiverEmail,
+        amount: transferDto.amount,
+        currency: '₦',
+        transactionID: uuid(),
+        senderID: { connect: { id: sender.id } },
+        receiverID: { connect: { id: recipient.id } },
+      } as Prisma.TransactionCreateInput,
+    });
+
     try {
-      const transaction = await this.prisma.$transaction(async (tx) => {
+      const updatedTransaction = await this.prisma.$transaction(async (tx) => {
         const sender = await tx.user.update({
           data: {
             accountBalance: {
               decrement: transferDto.amount,
             },
+            // sentTransactions: [...[newTransaction]],
           },
           where: {
             email: transferDto.senderEmail,
           },
-          select: { accountBalance: true },
+          select: {
+            accountBalance: true,
+            currency: true,
+            sentTransactions: true,
+          },
         });
-
-        const recipient = await tx.user.update({
+        const reciever = await tx.user.update({
           data: {
             accountBalance: {
               increment: transferDto.amount,
             },
+            // receivedTransactions: { set: { id: newTransaction.id } },
           },
           where: {
             email: transferDto.receiverEmail,
           },
-          select: { accountBalance: true },
+          select: {
+            accountBalance: true,
+            currency: true,
+            receivedTransactions: true,
+          },
         });
-
         return {
-          data: { sender: sender, recipient: recipient },
+          data: { sender: sender, recipient: reciever },
           success: true,
           message: 'funds sent successfully',
         };
       });
-      return transaction;
+      return { updatedTransaction, transactionDetails: newTransaction };
     } catch (error) {
+      console.log(error);
       const reversedTransaction = await this.prisma.$transaction(async (tx) => {
         const updatedSender = await tx.user.update({
           data: {
