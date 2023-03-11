@@ -11,19 +11,24 @@ generator client {
 }
 
 model User {
-  id           String    @id @default(auto()) @map("_id") @db.ObjectId
-  email        String    @unique
-  name         String
-  phone_number String
-  password     String
-  paymentID    String[]
-  accountBalance Int @default(5000)
+  id             String        @id @default(auto()) @map("_id") @db.ObjectId
+  email          String        @unique
+  name           String
+  phone_number   String
+  password       String
+  paymentID      String[]
+  accountBalance Int           @default(5000)
   currency       String
+  transactions   Transaction[]
+  uniqueId       String        @unique
 }
 
-// model Account {
-//   id          String @id @default(auto()) @map("_id") @db.ObjectId
-//   accountName String
-//   user        User?  @relation(fields: [userId], references: [id])
-//   userId      String @db.ObjectId
-// }
+model Transaction {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  senderEmail   String  @unique
+  receiverEmail String  @unique
+  amount        Int
+  currency      String
+  User          User?   @relation(fields: [userId], references: [id])
+  userId        String? @db.ObjectId
+}
