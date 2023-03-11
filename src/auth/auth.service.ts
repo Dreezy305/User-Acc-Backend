@@ -48,6 +48,8 @@ export class AuthService {
           phone_number: dto.phoneNumber,
           password: hash,
           paymentID: [paymentID()],
+          accountBalance: 5000,
+          currency: '₦',
         },
       });
 
@@ -121,6 +123,7 @@ export class AuthService {
     }
   }
 
+  // DELETE PAYMENT ID
   async deletePaymentId(userId: string, paymentId: string) {
     await this.prisma.$connect();
     const user = await this.prisma.user.findFirst({
@@ -150,6 +153,7 @@ export class AuthService {
     } catch (error) {}
   }
 
+  // FIND USER BY THEIR PAYMENT ID
   async getUserByPaymentId(paymentId: string) {
     await this.prisma.$connect();
     try {

@@ -17,7 +17,8 @@ model User {
   phone_number String
   password     String
   paymentID    String[]
-  // Account      Account[]
+  accountBalance Int @default(5000)
+  currency       String
 }
 
 // model Account {
