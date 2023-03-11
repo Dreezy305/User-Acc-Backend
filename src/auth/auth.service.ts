@@ -184,6 +184,7 @@ export class AuthService {
   async transferFunds(transferDto: TransferDto) {
     const sender = await this.prisma.user.findUnique({
       where: { email: transferDto.senderEmail },
+      select: { id: true, accountBalance: true },
     });
 
     if (!sender) {
@@ -192,6 +193,7 @@ export class AuthService {
 
     const recipient = await this.prisma.user.findUnique({
       where: { email: transferDto.receiverEmail },
+      select: { id: true, accountBalance: true },
     });
 
     if (!recipient) {
@@ -213,6 +215,7 @@ export class AuthService {
           where: {
             email: transferDto.senderEmail,
           },
+          select: { accountBalance: true },
         });
 
         const recipient = await tx.user.update({
@@ -224,6 +227,7 @@ export class AuthService {
           where: {
             email: transferDto.receiverEmail,
           },
+          select: { accountBalance: true },
         });
 
         return {
@@ -233,8 +237,40 @@ export class AuthService {
         };
       });
       return transaction;
-    } catch (error) {}
+    } catch (error) {
+      const reversedTransaction = await this.prisma.$transaction(async (tx) => {
+        const updatedSender = await tx.user.update({
+          data: {
+            accountBalance: {
+              increment: transferDto.amount,
+            },
+          },
+          where: {
+            id: sender.id,
+          },
+          select: { accountBalance: true },
+        });
 
-    return '';
+        const updatedRecipient = await tx.user.update({
+          data: {
+            accountBalance: {
+              decrement: transferDto.amount,
+            },
+          },
+          where: {
+            id: recipient.id,
+          },
+          select: { accountBalance: true },
+        });
+
+        return {
+          data: { sender: updatedSender, recipient: updatedRecipient },
+          success: false,
+          message: 'transaction failed',
+        };
+      });
+
+      return reversedTransaction;
+    }
   }
 }
