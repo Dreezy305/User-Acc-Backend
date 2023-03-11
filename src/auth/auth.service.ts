@@ -182,6 +182,7 @@ export class AuthService {
 
   // SEND AND RECIEVE MONEY
   async transferFunds(transferDto: TransferDto) {
+    await this.prisma.$connect();
     const sender = await this.prisma.user.findUnique({
       where: { email: transferDto.senderEmail },
       // select: { id: true, accountBalance: true, currency: true },

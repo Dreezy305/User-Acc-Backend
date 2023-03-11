@@ -20,7 +20,7 @@ import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/auth.dto';
 import { TransferDto } from './dto/transfer.dto';
 
-@Controller('auth')
+@Controller('user')
 @ApiTags('User Management Service')
 export class AuthController {
   constructor(private authService: AuthService) {}
