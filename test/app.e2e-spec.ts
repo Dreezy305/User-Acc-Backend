@@ -2,6 +2,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from 'src/auth/dto/auth.dto';
 import { TransferDto } from 'src/auth/dto/transfer.dto';
+import { HistoryDto } from 'src/auth/dto/transferHistory.dto';
 import * as request from 'supertest';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from './../src/app.module';
@@ -86,6 +87,16 @@ describe('AppController (e2e)', () => {
     it('send and receive funds', async () => {
       const res = await request(app.getHttpServer())
         .post('/user/transferFunds')
+        .send({ ...dto });
+      expect(res.status).toBe(200);
+    }, 50000);
+  });
+
+  describe('gets user transaction history', () => {
+    const dto: HistoryDto = { email: 'kihygunar@mailinator.com' };
+    it('retrieves user transaction history', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/user/getTransactionHistory')
         .send({ ...dto });
       expect(res.status).toBe(200);
     }, 50000);
