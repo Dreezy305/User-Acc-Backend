@@ -94,3 +94,7 @@ To use the APIs, you can use tools like Postman or Thunderclient. Here are the a
 5. `/getUserByPaymentId/:paymentId` - GET: Retrieves a user associated with a given payment ID
 
 6. `/transferFunds` - POST: Sends funds from one user to another
+
+7. `/getTransactionHistory` - POST: Retrieves the transaction history of a particular user.
+
+### The API documentation was generated using Swagger. You can access the documentation at http://localhost:8000/docs. or https://user-management-assessment.herokuapp.com/docs
