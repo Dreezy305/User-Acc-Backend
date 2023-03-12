@@ -24,9 +24,11 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This assessment is a mini-project designed to test your approach to solving real-world problems.
 
-## Installation
+## Installation instructions:
+
+-To install and run the project, follow these steps:
 
 ```bash
 $ npm install

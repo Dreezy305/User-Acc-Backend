@@ -29,10 +29,10 @@ describe('AppController (e2e)', () => {
 
   describe('user management system', () => {
     const dto: CreateUserDto = {
-      name: '',
+      name: 'JaneDutton',
       email: '',
-      password: '',
-      phoneNumber: '',
+      password: 'Password1@',
+      phoneNumber: '09012345678',
     };
     it('checks if user exists', async () => {
       const res = await request(app.getHttpServer())
