@@ -60,7 +60,11 @@ $ npm run start:prod
 
 - This will start the server at http://localhost:8000.
 
-- The documentation server will start http://localhost:8000/docs
+- The documentation local server will start http://localhost:8000/docs
+
+- Live api url at https://user-management-assessment.herokuapp.com
+
+- Live documentation at https://user-management-assessment.herokuapp.com/docs
 
 ## Test
 
