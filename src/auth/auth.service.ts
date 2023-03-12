@@ -11,6 +11,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuid } from 'uuid';
 import { CreateUserDto } from './dto/auth.dto';
 import { TransferDto } from './dto/transfer.dto';
+import { HistoryDto } from './dto/transferHistory.dto';
 
 @Injectable()
 export class AuthService {
@@ -298,11 +299,11 @@ export class AuthService {
     }
   }
 
-  async getTransactionHistory(id: string) {
+  async getTransactionHistory(dto: HistoryDto) {
     await this.prisma.$connect();
     try {
       const user = await this.prisma.user.findUnique({
-        where: { id: id },
+        where: { email: dto.email },
         // select: { id: true, accountBalance: true, currency: true },
         include: { sentTransactions: true, receivedTransactions: true },
       });

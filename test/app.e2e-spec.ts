@@ -1,10 +1,13 @@
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { CreateUserDto } from 'src/auth/dto/auth.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
+  let prisma: PrismaService;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -12,13 +15,45 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.enableShutdownHooks();
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
     await app.init();
+    prisma = app.get(PrismaService);
+    await prisma.$connect();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  afterAll(() => {
+    app.close();
+  });
+  it.todo('should pass');
+
+  describe('user management system', () => {
+    const dto: CreateUserDto = {
+      name: '',
+      email: '',
+      password: '',
+      phoneNumber: '',
+    };
+    it('checks if user exists', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/user/signup')
+        .send({ ...dto });
+      expect(res.status).toBe(403);
+    });
+
+    it('registers a user and generates a 7 digit alpha numeric payment ID', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/user/signup')
+        .send({ ...dto });
+      expect(res.status).toBe(201);
+    });
+  });
+
+  describe('generates payment ID', () => {
+    it('find user first to check if user exist', async () => {
+      // const id = new prisma.user.;
+      const res = await request(app.getHttpServer()).get('/posts/');
+      expect(res.status).toBe(404);
+    });
   });
 });

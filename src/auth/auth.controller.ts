@@ -19,6 +19,7 @@ import {
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/auth.dto';
 import { TransferDto } from './dto/transfer.dto';
+import { HistoryDto } from './dto/transferHistory.dto';
 
 @Controller('user')
 @ApiTags('User Management Service')
@@ -86,13 +87,14 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
+  @ApiBody({ type: HistoryDto })
   @ApiOperation({ summary: 'get transaction history' })
   @ApiOkResponse({
     status: HttpStatus.OK,
     description: 'user retrieved successfully',
   })
-  @Get('/getTransactionHistory/:id')
-  getTransactionHistory(@Param('id') id: string) {
-    return this.authService.getTransactionHistory(id);
+  @Post('/getTransactionHistory')
+  getTransactionHistory(@Body() dto: HistoryDto) {
+    return this.authService.getTransactionHistory(dto);
   }
 }

@@ -20,7 +20,7 @@ async function bootstrap() {
       'This is the official User management API document for skywallet assessment',
     )
     .setVersion('1.0.0')
-    .addServer('http://localhost:3000/v1/api')
+    .addServer('http://localhost:8000/v1/api')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -30,6 +30,6 @@ async function bootstrap() {
   });
   app.setGlobalPrefix('v1/api');
   app.enableCors();
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || 8000);
 }
 bootstrap();
