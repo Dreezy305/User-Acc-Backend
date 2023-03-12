@@ -42,7 +42,8 @@ $ git clone https://github.com/<username>/<repository>.git
 $ npm install
 ```
 
-## Create a .env file at the root directory of the project and add the following environment variables:
+## An enxmple env file is in the code base, it contains the db connection string. you can  Create a .env file at the root directory of the project and add the following environment variables found in the example file:
+
 
 ```bash
 $ DATABASE_URL=<mongodb_connection_string>
