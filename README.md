@@ -42,6 +42,12 @@ $ git clone https://github.com/<username>/<repository>.git
 $ npm install
 ```
 
+## Create a .env file at the root directory of the project and add the following environment variables:
+
+```bash
+$ DATABASE_URL=<mongodb_connection_string>
+```
+
 ## Run the app
 
 ```bash
