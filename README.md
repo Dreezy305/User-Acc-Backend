@@ -99,3 +99,13 @@ To use the APIs, you can use tools like Postman or Thunderclient. Here are the a
 7. `/getTransactionHistory` - POST: Retrieves the transaction history of a particular user.
 
 ### The API documentation was generated using Swagger. You can access the documentation at http://localhost:8000/docs. or https://user-management-assessment.herokuapp.com/docs
+
+
+### Contributing Guidelines:
+- Fork the repository and create a new branch for your changes.
+- Make your changes and write tests for them.
+- Submit a pull request with your changes.
+- Your pull request will be reviewed by a maintainer and merged if it meets the project's standards.
+
+### Contact Information
+- If you have any questions or issues with the project, you can contact me at bankoleidris@gmail.com
