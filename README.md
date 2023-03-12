@@ -63,7 +63,7 @@ $ npm run start:prod
 
 - The documentation local server will start http://localhost:8000/docs
 
-- Live api url at https://user-management-assessment.herokuapp.com
+- Live api url at https://user-management-assessment.herokuapp.com/v1/api
 
 - Live documentation at https://user-management-assessment.herokuapp.com/docs
 
