@@ -86,3 +86,11 @@ To use the APIs, you can use tools like Postman or Thunderclient. Here are the a
 1. `user/signup` - POST: Creates a user with the give name, phone number, email, password.
 
 2. Upon, user creation, a 7 digit alpha-numeric paymentID is being generated.
+
+3. `generatePaymentId/:id` - PUT: generates a 7 digit alpha-numeric payment ID for the users, this API requires a user id.
+
+4. `/deletePaymentId/:id/paymentId/:paymentId` - DELETE: Deletes a the payment ID with the given ID
+
+5. `/getUserByPaymentId/:paymentId` - GET: Retrieves a user associated with a given payment ID
+
+6. `/transferFunds` - POST: Sends funds from one user to another
