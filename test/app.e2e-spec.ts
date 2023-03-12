@@ -29,8 +29,8 @@ describe('AppController (e2e)', () => {
 
   describe('user management system', () => {
     const dto: CreateUserDto = {
-      name: 'JaneDutton',
-      email: '',
+      name: 'JaneDoe',
+      email: 'wutyke@mailinator.com',
       password: 'Password1@',
       phoneNumber: '09012345678',
     };
