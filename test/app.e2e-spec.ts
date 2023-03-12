@@ -20,7 +20,7 @@ describe('AppController (e2e)', () => {
     await app.init();
     prisma = app.get(PrismaService);
     await prisma.$connect();
-  });
+  }, 50000);
 
   afterAll(() => {
     app.close();
