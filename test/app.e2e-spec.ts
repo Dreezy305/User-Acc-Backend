@@ -51,7 +51,7 @@ describe('AppController (e2e)', () => {
 
   describe('generates payment ID', () => {
     it('generates payment id for user', async () => {
-      const res = await request(app.getHttpServer()).put(
+      const res = await request(app.getHttpServer()).delete(
         '/user/generatePaymentId/640dc3b61bdd4744939de659',
       );
       expect(res.status).toBe(200);
