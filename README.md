@@ -98,6 +98,8 @@ To use the APIs, you can use tools like Postman or Thunderclient. Here are the a
 
 7. `/getTransactionHistory` - POST: Retrieves the transaction history of a particular user.
 
+8. the test suite can be located in the app.e2e-spec.ts file
+
 ### The API documentation was generated using Swagger. You can access the documentation at http://localhost:8000/docs. or https://user-management-assessment.herokuapp.com/docs
 
 
