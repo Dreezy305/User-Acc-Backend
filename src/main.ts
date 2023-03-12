@@ -19,7 +19,7 @@ async function bootstrap() {
       'This is the official User management API document for skye wallet assessment',
     )
     .setVersion('1.0.0')
-    .addServer('http://localhost:8000/v1/api')
+    .addServer('https://user-management-assessment.herokuapp.com/')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
