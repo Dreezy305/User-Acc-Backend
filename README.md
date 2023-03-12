@@ -76,3 +76,5 @@ $ npm run test:cov
 ```
 
 ## Usage instructions:
+
+To use the APIs, you can use tools like Postman or Thunderclient. Here are the available endpoints:
