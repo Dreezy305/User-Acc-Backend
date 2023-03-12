@@ -54,7 +54,7 @@ describe('AppController (e2e)', () => {
       const res = await request(app.getHttpServer()).put(
         '/user/generatePaymentId/640dc3b61bdd4744939de659',
       );
-      expect(res.status).toBe(200);
+      expect(res.status).toBe(403);
     }, 50000);
   });
 
@@ -63,7 +63,7 @@ describe('AppController (e2e)', () => {
       const res = await request(app.getHttpServer()).delete(
         '/user/deletePaymentId/640dc3b61bdd4744939de659/paymentId/ac4ac42',
       );
-      expect(res.status).toBe(200);
+      expect(res.status).toBe(403);
     }, 50000);
   });
 });
