@@ -1,6 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from 'src/auth/dto/auth.dto';
+import { TransferDto } from 'src/auth/dto/transfer.dto';
 import * as request from 'supertest';
 import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from './../src/app.module';
@@ -72,6 +73,20 @@ describe('AppController (e2e)', () => {
       const res = await request(app.getHttpServer()).get(
         '/user/getUserByPaymentId/0aee86a',
       );
+      expect(res.status).toBe(200);
+    }, 50000);
+  });
+
+  describe('transfer funds', () => {
+    const dto: TransferDto = {
+      senderEmail: 'zytyza@mailinator.com',
+      receiverEmail: 'hasumu@mailinator.com',
+      amount: 1,
+    };
+    it('send and receive funds', async () => {
+      const res = await request(app.getHttpServer())
+        .post('/user/transferFunds')
+        .send({ ...dto });
       expect(res.status).toBe(200);
     }, 50000);
   });
