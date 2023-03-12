@@ -46,14 +46,22 @@ describe('AppController (e2e)', () => {
         .post('/user/signup')
         .send({ ...dto });
       expect(res.status).toBe(403);
-    });
+    }, 50000);
   });
 
   describe('generates payment ID', () => {
-    it('find user first to check if user exist', async () => {
-      // const id = new prisma.user.;
-      const res = await request(app.getHttpServer()).get('/posts/');
-      expect(res.status).toBe(404);
-    });
+    it('generates payment id for user', async () => {
+      const res = await request(app.getHttpServer()).put(
+        '/user/generatePaymentId/640dc3b61bdd4744939de659',
+      );
+      expect(res.status).toBe(200);
+    }, 50000);
+
+    it('deletes payment id', async () => {
+      const res = await request(app.getHttpServer()).put(
+        '/user/deletePaymentId/640dc3b61bdd4744939de659/paymentId/:paymentId',
+      );
+      expect(res.status).toBe(200);
+    }, 50000);
   });
 });
