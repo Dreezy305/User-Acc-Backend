@@ -7,8 +7,8 @@ import {
   PrismaClientValidationError,
 } from '@prisma/client/runtime';
 import * as argon from 'argon2';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { v4 as uuid } from 'uuid';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/auth.dto';
 import { TransferDto } from './dto/transfer.dto';
 import { HistoryDto } from './dto/transferHistory.dto';

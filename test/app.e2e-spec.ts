@@ -1,8 +1,8 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from 'src/auth/dto/auth.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
 import * as request from 'supertest';
+import { PrismaService } from '../src/prisma/prisma.service';
 import { AppModule } from './../src/app.module';
 
 describe('AppController (e2e)', () => {

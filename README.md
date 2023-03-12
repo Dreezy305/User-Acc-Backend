@@ -109,3 +109,7 @@ To use the APIs, you can use tools like Postman or Thunderclient. Here are the a
 
 ### Contact Information
 - If you have any questions or issues with the project, you can contact me at bankoleidris@gmail.com
+
+### Acknowledgments:
+- This project was created using NestJS, Prisma, and MongoDB.
+- e2e test suite was written with nestjs/testing and jest.
