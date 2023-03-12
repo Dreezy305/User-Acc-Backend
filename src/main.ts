@@ -28,7 +28,7 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
   app.setGlobalPrefix('v1/api');
-  app.enableCors();
+  app.enableCors({ allowedHeaders: '*', origin: '*' });
   await app.listen(process.env.PORT || 8000);
 }
 bootstrap();
