@@ -30,18 +30,21 @@ This assessment is a mini-project designed by Skye Wallet to test my approach to
 
 - To install and run the project, follow these steps:
 
-  Clone the repository using the command:
+## Clone the repository using the command:
 
 ```bash
 $ git clone https://github.com/<username>/<repository>.git
 ```
 
-## Running the app
+## Install dependencies by running the following command:
 
 ```bash
-# development
-$ npm run start
+$ npm install
+```
 
+## Run the app
+
+```bash
 # watch mode
 $ npm run start:dev
 
