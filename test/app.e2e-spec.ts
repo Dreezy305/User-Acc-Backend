@@ -66,4 +66,13 @@ describe('AppController (e2e)', () => {
       expect(res.status).toBe(403);
     }, 50000);
   });
+
+  describe('gets user by payment id', () => {
+    it('retrieves user info by payment ID', async () => {
+      const res = await request(app.getHttpServer()).get(
+        '/user/getUserByPaymentId/0aee86a',
+      );
+      expect(res.status).toBe(200);
+    }, 50000);
+  });
 });
