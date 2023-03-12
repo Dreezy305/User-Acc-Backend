@@ -30,8 +30,10 @@ This assessment is a mini-project designed by Skye Wallet to test my approach to
 
 - To install and run the project, follow these steps:
 
+  Clone the repository using the command:
+
 ```bash
-$ npm install
+$ git clone https://github.com/<username>/<repository>.git
 ```
 
 ## Running the app
