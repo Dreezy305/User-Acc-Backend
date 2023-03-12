@@ -24,11 +24,11 @@
 
 ## Description
 
-This assessment is a mini-project designed to test your approach to solving real-world problems.
+This assessment is a mini-project designed by Skye Wallet to test my approach to solving real-world problems.
 
 ## Installation instructions:
 
--To install and run the project, follow these steps:
+- To install and run the project, follow these steps:
 
 ```bash
 $ npm install
