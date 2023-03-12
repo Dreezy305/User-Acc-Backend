@@ -82,3 +82,7 @@ $ npm run test:cov
 ## Usage instructions:
 
 To use the APIs, you can use tools like Postman or Thunderclient. Here are the available endpoints:
+
+1. `user/signup` - POST: Creates a user with the give name, phone number, email, password.
+
+2. Upon, user creation, a 7 digit alpha-numeric paymentID is being generated.
