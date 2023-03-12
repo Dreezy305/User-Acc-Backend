@@ -38,7 +38,7 @@ describe('AppController (e2e)', () => {
       const res = await request(app.getHttpServer())
         .post('/user/signup')
         .send({ ...dto });
-      expect(res.status).toBe(403);
+      expect(res.status).toBe(201);
     });
 
     it('registers a user and generates a 7 digit alpha numeric payment ID', async () => {
