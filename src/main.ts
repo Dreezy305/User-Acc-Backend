@@ -14,10 +14,9 @@ async function bootstrap() {
     }),
   );
   const config: any = new DocumentBuilder()
-    .addBearerAuth()
     .setTitle('User management system')
     .setDescription(
-      'This is the official User management API document for skywallet assessment',
+      'This is the official User management API document for skye wallet assessment',
     )
     .setVersion('1.0.0')
     .addServer('http://localhost:8000/v1/api')
