@@ -56,10 +56,12 @@ describe('AppController (e2e)', () => {
       );
       expect(res.status).toBe(200);
     }, 50000);
+  });
 
+  describe('deletes payment ID', () => {
     it('deletes payment id', async () => {
       const res = await request(app.getHttpServer()).put(
-        '/user/deletePaymentId/640b30c4e8e9c69b1fdbc40e/paymentId/bb449a3',
+        '/user/deletePaymentId/640dc3b61bdd4744939de659/paymentId/8946754',
       );
       expect(res.status).toBe(200);
     }, 50000);
