@@ -52,8 +52,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-This will start the server at http://localhost:8000.
-The documentation server will start http://localhost:8000/docs
+- This will start the server at http://localhost:8000.
+
+- The documentation server will start http://localhost:8000/docs
 
 ## Test
 
